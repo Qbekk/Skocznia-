@@ -11,7 +11,7 @@ namespace wat
         static void Main(string[] args)
         {
         	Console.SetWindowSize(120,55);
-            var wut = new Skocznia(10);
+            var wut = new Skocznia(12);
             wut.buduj();
             wut.zjazd(4);
             Console.ReadKey();

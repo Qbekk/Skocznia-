@@ -8,3 +8,8 @@ C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obie
 C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\bin\Debug\wut.exe
 C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\bin\Debug\wut.pdb
 C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\obj\Debug\wut.csprojResolveAssemblyReference.cache
+Q:\pulipt\workshop\github\Skocznia-\obj\Debug\wut.exe
+Q:\pulipt\workshop\github\Skocznia-\obj\Debug\wut.pdb
+Q:\pulipt\workshop\github\Skocznia-\bin\Debug\wut.exe
+Q:\pulipt\workshop\github\Skocznia-\bin\Debug\wut.pdb
+Q:\pulipt\workshop\github\Skocznia-\obj\Debug\wut.csprojResolveAssemblyReference.cache
