@@ -1,0 +1,10 @@
+C:\Documents and Settings\Qba\Moje dokumenty\SharpDevelop Projects\wut\wut\bin\Debug\wut.exe
+C:\Documents and Settings\Qba\Moje dokumenty\SharpDevelop Projects\wut\wut\bin\Debug\wut.pdb
+C:\Documents and Settings\Qba\Moje dokumenty\SharpDevelop Projects\wut\wut\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Qba\Moje dokumenty\SharpDevelop Projects\wut\wut\obj\Debug\wut.exe
+C:\Documents and Settings\Qba\Moje dokumenty\SharpDevelop Projects\wut\wut\obj\Debug\wut.pdb
+C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\obj\Debug\wut.exe
+C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\obj\Debug\wut.pdb
+C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\bin\Debug\wut.exe
+C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\bin\Debug\wut.pdb
+C:\Users\student.kie\Downloads\skocznia_na_obiektach-2015-12-16\skocznia na obiektach\obj\Debug\wut.csprojResolveAssemblyReference.cache
