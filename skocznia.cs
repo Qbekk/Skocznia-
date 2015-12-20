@@ -40,18 +40,42 @@ namespace wat
             else
                 return false;
         }
-
+        public char avatar(bool zyje)
+        {
+            Random ran = new Random();
+            if (zyje)
+                return '@';
+            else
+            {
+                switch (ran.Next(4))
+                {
+                    case 0:
+                        return '>';
+                    case 1:
+                        return 'V';
+                    case 2:
+                        return '<';
+                    case 3:
+                        return 'x';
+                    default:
+                        return '0';
+                        
+                }
+                
+            }
+        }
         public void zjazd(int kat)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
             int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;
+            bool zyje = true;
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
                     x++;//w prawo
                     y++;//w dół
                     Console.SetCursorPosition(x + 1, y);
-                    Console.Write('@');
+                    Console.Write(avatar(zyje));
                     Console.SetCursorPosition(x, y - 1);
                     Console.Write(" ");
                     speed -= 5;
@@ -67,7 +91,7 @@ namespace wat
                     Console.SetCursorPosition(x, y);
                     if (x > rozmiar + 1)
                     {
-                        Console.Write('@');
+                        Console.Write(avatar(zyje));
                         Console.SetCursorPosition(x - 1, y);
                         Console.Write("_");
                     }
@@ -77,6 +101,7 @@ namespace wat
                 Console.SetCursorPosition(1, 29);//debug
                 Console.Write("x= {0}, y={1}", x, y);//debug
                 bool wybity = false;
+                
                 while (y > rozmiar - 3)//wybicie
                 {
                     Thread.Sleep(speed);
@@ -86,7 +111,7 @@ namespace wat
                         Console.Write("_");
                     }
                     Console.SetCursorPosition(x + 1, y);
-                    Console.Write('@');
+                    Console.Write(avatar(zyje));
                     if (x != rozmiar + 4)
                     {
                         Console.SetCursorPosition(x, y + 1);
@@ -118,7 +143,7 @@ namespace wat
                     }
                     Thread.Sleep(speed);
                     Console.SetCursorPosition(x + 1, y);
-                    Console.Write('@');
+                    Console.Write(avatar(zyje));
                     Console.SetCursorPosition(x, y - 1);
                     Console.Write(" ");
                     
@@ -133,17 +158,18 @@ namespace wat
                         speed -= 2;
                    
                     x++;//w prawo
-                    //Console.SetCursorPosition(60, y - 1);//debug
-                    //Console.Write(speed);//debug
+                        //Console.SetCursorPosition(60, y - 1);//debug
+                        //Console.Write(speed);//debug
+                    if (x % kat == 1)//kiedy wyjdziesz poza zasię poprzedniego sprawdzenia cyklu
+                        falloff = true;//odznacz wykonanie cyklu
+                
                     if (falloff == true && x % kat == 0 && !(ziemia(x, y)))//tu się dzieje grawitacja!!!
                     {//jeżeli jeszcze nie spadł w tym cyklu, i pora żeby spadł, a nie jest na ziemi
                         x -= 1;//to niech spadnie o jeden
                         falloff = false;//i oznaczy cykle jako wykonany
                     }
-                    if (x % kat == 1)//kiedy wyjdziesz poza zasię poprzedniego sprawdzenia cyklu
-                        falloff = true;//odznacz wykonanie cyklu
-                    y++;//w dół
-                    
+
+                    y++;//w dół    
                 }//koniec lotu
                 
                 Console.SetCursorPosition(1, 32);//debug
@@ -153,7 +179,7 @@ namespace wat
                 {
                     Thread.Sleep(speed);
                     Console.SetCursorPosition(x, y);
-                    Console.Write('@');
+                    Console.Write(avatar(zyje));
                     Console.SetCursorPosition(x - 1, y);
                     if (x == rozmiar * 3 + 7)
                         Console.Write('\\');
