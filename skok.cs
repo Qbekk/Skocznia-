@@ -3,6 +3,8 @@ using System;
 
 namespace wat
 {
+    //przechowuje dane pojedyńczego skoku
+    //doużytku przy wyświetlaniu wyników
 	public class Skok
 	{
 		public int numer,odleglosc,punkty;

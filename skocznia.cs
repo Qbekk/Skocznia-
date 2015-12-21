@@ -83,6 +83,7 @@ namespace wat
             silawyb=ran.Next(skill+1,49-skill)/10+1;
             if (silawyb<2)
             	silawyb=2;
+            int odleglosc=0;
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
@@ -119,10 +120,18 @@ namespace wat
                 while (y > rozmiar - silawyb)//wybicie
                 {
                     Thread.Sleep(speed);
-                    if (wybity == false)//łączy z poprzednim
+                    if (!wybity)//łączy z poprzednim
                     {
                         Console.SetCursorPosition(x, y);
                         Console.Write("_");
+                    int testwybicia = ran.Next(0, 201);
+                        if (testwybicia>190+skill)//szansa na udane wybicie to 95% + 0.5%*skill
+                        {
+                        
+                        zyje = false;
+                        kat = 2;
+                        silawyb = 2;
+                        }
                     }
                     Console.SetCursorPosition(x + 1, y);
                     Console.Write(avatar(zyje));
@@ -166,14 +175,20 @@ namespace wat
                         Console.SetCursorPosition(x + 1, y);
                         Console.Write(" ");
                     }
-                    if (!ziemia(x, y))
+                    if (!ziemia(x, y))//w powietrzu przyspiesza szybciej niż na ziemi
                         speed -= 5;
                     else
                         speed -= 2;
                     if (ziemia(x+1,y)&&!wyladowal)//ladowanie na stoku
                     {
                     	wyladowal=true;
-                    	zyje=false;
+                        int testland = ran.Next(0,101);
+                        odleglosc = x;
+                        if (testland > 90 + skill)//prawdopodobieństwo udanego lądowania na stoku to 90% +1%*skill
+                        {
+                        zyje = false;
+                        speed += 50;
+                        }
                     }
                     x++;//w prawo
                         //Console.SetCursorPosition(60, y - 1);//debug
@@ -191,11 +206,14 @@ namespace wat
                 }//koniec lotu
                 if(!wyladowal)
                 {
-                	wyladowal=true;
+                    odleglosc = x;
+                    wyladowal =true;
+                    int testland2 = ran.Next(0,201);
+                    if (testland2>120+5*skill)//prawdopodobieńśtwo udanego lądowania na płaskim to 60% + 2.5% *skill
                 	zyje=false;
                 }
                 Console.SetCursorPosition(1, 32);//debug
-                Console.Write("x= {0}, y={1}", x, y);//debug
+                Console.Write("x= {0}, y={1}, odległość = {2}", x, y,odleglosc);//debug
                 y--;//dorównanie w górę
                 while (x < 3.5 * rozmiar + 5 + 3)//już na płaskim, druga liczba to jak daleko dojedzie
                 {
