@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="skok.cs" />
     <Compile Include="Skoczek.cs" />
     <Compile Include="stare.cs" />
     <Compile Include="skocznia.cs" />
