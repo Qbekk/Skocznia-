@@ -10,7 +10,9 @@ namespace wat
     {
         static void Main(string[] args)
         {
-            /*
+	
+			Console.SetWindowSize(120,55);	
+        	/*
             int rozmiar, gracze, skill;
             string imie;
             Console.WriteLine("Witaj! Podaj rozmiar skoczni!");
@@ -31,7 +33,7 @@ namespace wat
                 Console.WriteLine("Skoczek {0} nazywa się {1} i ma poziom umiejętności {2}",i+1,tabela[i].name, tabela[i].skill);
             }
             */
-            Console.SetWindowSize(120,55);
+
             var wut = new Skocznia(12);
             wut.buduj();
             wut.zjazd(2);
