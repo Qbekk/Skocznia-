@@ -65,16 +65,24 @@ namespace wat
                 
             }
         }
+        public int nowykat(int skill){
+        	int losow=ran.Next(0+skill*4,85-2*skill)-30;
+            int kat = (35+losow)/10;
+            if (kat<2)
+            	kat=2;
+            return kat;
+        }
         public void zjazd( int skill)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
             int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;
             bool zyje = true;
             bool wyladowal=false;
-            int kat=6;// od 2 do 9
-            int losow=ran.Next(0,20-skill);
-            kat = (40+(losow-(20-skill)))/10;
-            
+            int kat=nowykat(skill);
+            int silawyb=2;
+            silawyb=ran.Next(skill+1,49-skill)/10+1;
+            if (silawyb<2)
+            	silawyb=2;
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
@@ -105,10 +113,10 @@ namespace wat
                 }
                 x -= 1;// dorównanie w lewo
                 Console.SetCursorPosition(1, 29);//debug
-                Console.Write("x= {0}, y={1}", x, y);//debug
+                Console.Write("x= {0}, y={1}, kat to {2}", x, y,kat);//debug
                 bool wybity = false;
                 
-                while (y > rozmiar - 3)//wybicie
+                while (y > rozmiar - silawyb)//wybicie
                 {
                     Thread.Sleep(speed);
                     if (wybity == false)//łączy z poprzednim
@@ -140,7 +148,7 @@ namespace wat
                 
                 while (y <= rozmiar * 3 + 2)//spadek pod katem kat
                 {
-                    if (x == rozmiar + 7)
+                    if (x == rozmiar + silawyb+4)
 
                     {
                         Console.SetCursorPosition(x - 1, y - 1);
