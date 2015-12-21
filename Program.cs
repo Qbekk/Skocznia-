@@ -36,7 +36,7 @@ namespace wat
 
             var wut = new Skocznia(12);
             wut.buduj();
-            wut.zjazd(2);
+            wut.zjazd(1);
             Console.ReadKey();
             
         }

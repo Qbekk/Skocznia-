@@ -11,7 +11,8 @@ namespace wat
 	{
 		public int speed = 300;
 		public int rozmiar;
-		public Skocznia(int roz) 
+		Random ran = new Random();
+		public Skocznia(int roz)
 		{
 			this.rozmiar=roz;
 		}
@@ -42,7 +43,7 @@ namespace wat
         }
         public char avatar(bool zyje)
         {
-            Random ran = new Random();
+            
             if (zyje)
                 return '@';
             else
@@ -64,11 +65,16 @@ namespace wat
                 
             }
         }
-        public void zjazd(int kat)
+        public void zjazd( int skill)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
             int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;
             bool zyje = true;
+            bool wyladowal=false;
+            int kat=6;// od 2 do 9
+            int losow=ran.Next(0,20-skill);
+            kat = (40+(losow-(20-skill)))/10;
+            
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
@@ -156,7 +162,11 @@ namespace wat
                         speed -= 5;
                     else
                         speed -= 2;
-                   
+                    if (ziemia(x+1,y)&&!wyladowal)//ladowanie na stoku
+                    {
+                    	wyladowal=true;
+                    	zyje=false;
+                    }
                     x++;//w prawo
                         //Console.SetCursorPosition(60, y - 1);//debug
                         //Console.Write(speed);//debug
@@ -171,7 +181,11 @@ namespace wat
 
                     y++;//w dół    
                 }//koniec lotu
-                
+                if(!wyladowal)
+                {
+                	wyladowal=true;
+                	zyje=false;
+                }
                 Console.SetCursorPosition(1, 32);//debug
                 Console.Write("x= {0}, y={1}", x, y);//debug
                 y--;//dorównanie w górę
