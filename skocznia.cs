@@ -9,7 +9,7 @@ namespace wat
 	//buduje skocznie oraz odpowiada za zjazd skoczka po niej
 	public class Skocznia
 	{
-		public int speed = 300;
+		public int speed = 400;
 		public int rozmiar;
 		Random ran = new Random();
 		public Skocznia(int roz)
@@ -72,7 +72,7 @@ namespace wat
             	kat=2;
             return kat;
         }
-        public Skok zjazd( Skoczek skoczek)
+        public Skok zjazd( Skoczek skoczek,int kolej)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
             int skill = skoczek.skill;
         	int x = 0;//poczatkowa pozycja (0,0)
@@ -214,7 +214,7 @@ namespace wat
                 	zyje=false;
                 }
                 Console.SetCursorPosition(1, 32);//debug
-                Console.Write("x= {0}, y={1}, odległość = {2}", x, y,odleglosc);//debug
+                Console.Write("x= {0}, y={1}, odległość = {2}  roz {3}", x, y,odleglosc,rozmiar);//debug
                 y--;//dorównanie w górę
                 while (x < 3.5 * rozmiar + 5 + silawyb + 3)//już na płaskim, druga liczba to jak daleko dojedzie
                 {
@@ -252,7 +252,8 @@ namespace wat
                 		nota=0;
                 	noty[i]=nota;
                 }
-                zwrot=new Skok(skoczek,1,odleglosc,noty);
+                double metry=odleglosc*5+(double)ran.Next(0,10)/2;
+                zwrot=new Skok(skoczek,kolej,metry,rozmiar,noty);
                 return zwrot;
             }//zamyka zjazd
         }
