@@ -14,7 +14,7 @@ namespace wat
 		Random ran = new Random();
 		public Skocznia(int roz)
 		{
-			this.rozmiar=roz;
+			this.rozmiar=roz;//zalecane od 5 wzwyż
 		}
 		public void buduj(){//buduje skocznię
 			string spacje = "";
@@ -72,15 +72,16 @@ namespace wat
             	kat=2;
             return kat;
         }
-        public void zjazd( int skill)
+        public Skok zjazd( Skoczek skoczek)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
-            int x = 0;//poczatkowa pozycja (0,0)
+            int skill = skoczek.skill;
+        	int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;
             bool zyje = true;
             bool wyladowal=false;
             int kat=nowykat(skill);
-            int silawyb=2;
-            silawyb=ran.Next(skill+1,49-skill)/10+1;
+            int silawyb=ran.Next(skill+1,49-skill)/10+1;
+            Skok zwrot;
             if (silawyb<2)
             	silawyb=2;
             int odleglosc=0;
@@ -183,7 +184,7 @@ namespace wat
                     {
                     	wyladowal=true;
                         int testland = ran.Next(0,101);
-                        odleglosc = x;
+                        odleglosc = x-(rozmiar +4);
                         if (testland > 90 + skill)//prawdopodobieństwo udanego lądowania na stoku to 90% +1%*skill
                         {
                         zyje = false;
@@ -206,7 +207,7 @@ namespace wat
                 }//koniec lotu
                 if(!wyladowal)
                 {
-                    odleglosc = x;
+                	odleglosc = x-(rozmiar+4);
                     wyladowal =true;
                     int testland2 = ran.Next(0,201);
                     if (testland2>120+5*skill)//prawdopodobieńśtwo udanego lądowania na płaskim to 60% + 2.5% *skill
@@ -215,7 +216,7 @@ namespace wat
                 Console.SetCursorPosition(1, 32);//debug
                 Console.Write("x= {0}, y={1}, odległość = {2}", x, y,odleglosc);//debug
                 y--;//dorównanie w górę
-                while (x < 3.5 * rozmiar + 5 + 3)//już na płaskim, druga liczba to jak daleko dojedzie
+                while (x < 3.5 * rozmiar + 5 + silawyb + 3)//już na płaskim, druga liczba to jak daleko dojedzie
                 {
                     Thread.Sleep(speed);
                     Console.SetCursorPosition(x, y);
@@ -228,6 +229,31 @@ namespace wat
                     x++;//w prawo
                     speed += 10;
                 }
+                double[] noty=new double[5];
+                double baza;
+                if(zyje){
+                		baza=((double)ran.Next(30+skill,41))/2;
+                	}
+                	else{
+                		baza=((double)ran.Next(0+skill,21))/2;
+                	}
+                	
+                for (int i=0;i<5;i++){
+                	double nota=0;
+                	if(zyje){
+                		nota=baza-((double)ran.Next(0,7))/2+1.5;
+                	}
+                	else{
+                		nota=baza-((double)ran.Next(0,9))/2+2;
+                	}
+                	if (nota>20)
+                		nota=20;
+                	else if(nota<0)
+                		nota=0;
+                	noty[i]=nota;
+                }
+                zwrot=new Skok(skoczek,1,odleglosc,noty);
+                return zwrot;
             }//zamyka zjazd
         }
 }

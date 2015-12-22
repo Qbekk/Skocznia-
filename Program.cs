@@ -33,9 +33,13 @@ namespace wat
                 Console.WriteLine("Skoczek {0} nazywa się {1} i ma poziom umiejętności {2}",i+1,tabela[i].name, tabela[i].skill);
             }
             */
-            Skocznia wut = new Skocznia(12);
+            Skocznia wut = new Skocznia(5);
+            Skoczek malysz=new Skoczek("adam",1);
+            Skok skok;
+            
             wut.buduj();
-            wut.zjazd(1);
+            skok=wut.zjazd(malysz);
+            Console.Write("\n {0}    {1}   {2}   {3}    {4}",skok.noty[0],skok.noty[1],skok.noty[2],skok.noty[3],skok.noty[4]);
             Console.ReadKey();
             
         }

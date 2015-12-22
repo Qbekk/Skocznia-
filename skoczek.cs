@@ -5,7 +5,7 @@ using System.Text;
 
 namespace wat
 {
-    class Skoczek
+    public class Skoczek
     {
         public int skill;
         public string name;

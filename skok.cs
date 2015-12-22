@@ -7,14 +7,15 @@ namespace wat
     //doużytku przy wyświetlaniu wyników
 	public class Skok
 	{
-		public int numer,odleglosc,punkty;
-		
-		
-		public Skok(int numer, int odleglosc, int punkty)
+		public int numer,odleglosc;
+		public Skoczek skoczek;
+		public double[] noty;
+		public Skok(Skoczek skoczek,int numer, int odleglosc, double[] noty)
 		{
+			this.skoczek=skoczek;
 			this.numer=numer;
 			this.odleglosc=odleglosc;			
-			this.punkty=punkty;
+			this.noty=noty;
 		}
 	}
 }
