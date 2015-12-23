@@ -13,3 +13,8 @@ Q:\pulipt\workshop\github\Skocznia-\obj\Debug\wut.pdb
 Q:\pulipt\workshop\github\Skocznia-\bin\Debug\wut.exe
 Q:\pulipt\workshop\github\Skocznia-\bin\Debug\wut.pdb
 Q:\pulipt\workshop\github\Skocznia-\obj\Debug\wut.csprojResolveAssemblyReference.cache
+C:\Documents and Settings\Qba\workspace\Skocznia-\bin\Debug\wut.exe
+C:\Documents and Settings\Qba\workspace\Skocznia-\bin\Debug\wut.pdb
+C:\Documents and Settings\Qba\workspace\Skocznia-\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Qba\workspace\Skocznia-\obj\Debug\wut.exe
+C:\Documents and Settings\Qba\workspace\Skocznia-\obj\Debug\wut.pdb

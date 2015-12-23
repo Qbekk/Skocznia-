@@ -31,6 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,6 +47,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="skok.cs" />
+    <Compile Include="Skoczek.cs" />
     <Compile Include="stare.cs" />
     <Compile Include="skocznia.cs" />
     <Compile Include="Program.cs" />
