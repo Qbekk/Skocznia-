@@ -53,7 +53,7 @@ namespace wat
                     case 0:
                         return '>';
                     case 1:
-                        return 'V';
+                        return 'v';
                     case 2:
                         return '<';
                     case 3:
@@ -159,22 +159,19 @@ namespace wat
                 while (y <= rozmiar * 3 + 2)//spadek pod katem kat
                 {
                     if (x == rozmiar + silawyb+4)
-
                     {
                         Console.SetCursorPosition(x - 1, y - 1);
                         Console.Write(" ");
-
                     }
                     Thread.Sleep(speed);
                     Console.SetCursorPosition(x + 1, y);
                     Console.Write(avatar(zyje));
                     Console.SetCursorPosition(x, y - 1);
                     Console.Write(" ");
-                    
-                    if (falloff == true && x % kat == kat - 1)
+                    if (falloff == false && x % kat == kat - 1) 
                     {
-                        Console.SetCursorPosition(x + 1, y);
-                        Console.Write(" ");
+                       Console.SetCursorPosition(x + 1, y-1);
+                       Console.Write(" ");
                     }
                     if (!ziemia(x, y))//w powietrzu przyspiesza szybciej niż na ziemi
                         speed -= 5;
@@ -192,17 +189,13 @@ namespace wat
                         }
                     }
                     x++;//w prawo
-                        //Console.SetCursorPosition(60, y - 1);//debug
-                        //Console.Write(speed);//debug
                     if (x % kat == 1)//kiedy wyjdziesz poza zasię poprzedniego sprawdzenia cyklu
                         falloff = true;//odznacz wykonanie cyklu
-                
                     if (falloff == true && x % kat == 0 && !(ziemia(x, y)))//tu się dzieje grawitacja!!!
                     {//jeżeli jeszcze nie spadł w tym cyklu, i pora żeby spadł, a nie jest na ziemi
                         x -= 1;//to niech spadnie o jeden
                         falloff = false;//i oznaczy cykle jako wykonany
                     }
-
                     y++;//w dół    
                 }//koniec lotu
                 if(!wyladowal)
@@ -216,6 +209,7 @@ namespace wat
                 Console.SetCursorPosition(1, 32);//debug
                 Console.Write("x= {0}, y={1}, odległość = {2}  roz {3}", x, y,odleglosc,rozmiar);//debug
                 y--;//dorównanie w górę
+                x++;
                 while (x < 3.5 * rozmiar + 5 + silawyb + 3)//już na płaskim, druga liczba to jak daleko dojedzie
                 {
                     Thread.Sleep(speed);

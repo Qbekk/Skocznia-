@@ -21,9 +21,9 @@ namespace wat
 		}
 		public double wynik(){
 			double result=0;
-			double baza=60;
 			double mnoznik;
-			if (rozmiar <8)
+            double baza = 60;
+            if (rozmiar <8)
 				mnoznik=2;
 			else if(rozmiar<=12)
 				mnoznik=1.6;
@@ -31,13 +31,15 @@ namespace wat
 				mnoznik=1.2;
 				baza=120;
 			}
-			result=baza-(rozmiar*10-odleglosc)*(mnoznik);
+			result=baza-((rozmiar-2)*10-odleglosc)*(mnoznik);
 			Array.Sort(noty);
 			for (int i=1; i<noty.Length-1;i++)
 			{
 				result+=noty[i];
 				Console.Write("\n nota dodana {0},wynik {1}",noty[i],result);
 			}
+            if (result < 0)
+                result = 0;
 			return result;
 		}
 	}
