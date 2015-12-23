@@ -85,6 +85,8 @@ namespace wat
             if (silawyb<2)
             	silawyb=2;
             int odleglosc=0;
+            if (silawyb == 2 && kat == 2)
+                silawyb = 3;
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
@@ -95,11 +97,8 @@ namespace wat
                     Console.SetCursorPosition(x, y - 1);
                     Console.Write(" ");
                     speed -= 5;
-                    //Console.SetCursorPosition(60, y - 1);//debug
-                    //Console.Write(speed);//debug
+                    
                 }
-                Console.SetCursorPosition(1, 28); //debug
-                Console.Write("x= {0}, y={1}", x, y); //debug
                 x += 2;//dorównanie do prawa
                 while (x <= rozmiar + 3)//płaskie przed wybiciem
                 {
@@ -114,8 +113,6 @@ namespace wat
                     x++;    //w prawo
                 }
                 x -= 1;// dorównanie w lewo
-                Console.SetCursorPosition(1, 29);//debug
-                Console.Write("x= {0}, y={1}, kat to {2}", x, y,kat);//debug
                 bool wybity = false;
                 
                 while (y > rozmiar - silawyb)//wybicie
@@ -152,8 +149,6 @@ namespace wat
                 }
                 
                 bool falloff = false;//informuje, czy już był spadek w tym cyklu
-                Console.SetCursorPosition(1, 30);//debug
-                Console.Write("x= {0}, y={1}", x, y);//debug
                 y++;//dorównanie w dół
                 
                 while (y <= rozmiar * 3 + 2)//spadek pod katem kat
@@ -206,8 +201,6 @@ namespace wat
                     if (testland2>120+5*skill)//prawdopodobieńśtwo udanego lądowania na płaskim to 60% + 2.5% *skill
                 	zyje=false;
                 }
-                Console.SetCursorPosition(1, 32);//debug
-                Console.Write("x= {0}, y={1}, odległość = {2}  roz {3}", x, y,odleglosc,rozmiar);//debug
                 y--;//dorównanie w górę
                 x++;
                 while (x < 3.5 * rozmiar + 5 + silawyb + 3)//już na płaskim, druga liczba to jak daleko dojedzie

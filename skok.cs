@@ -36,7 +36,6 @@ namespace wat
 			for (int i=1; i<noty.Length-1;i++)
 			{
 				result+=noty[i];
-				Console.Write("\n nota dodana {0},wynik {1}",noty[i],result);
 			}
             if (result < 0)
                 result = 0;
