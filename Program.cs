@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 namespace wat
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        static bool Done = false;
+        public static void Main(string[] args)
         {
-	
+            
 			Console.SetWindowSize(120,55);
             /*
             int rozmiar, gracze, skill;
@@ -33,11 +29,23 @@ namespace wat
                 Console.WriteLine("Skoczek {0} nazywa się {1} i ma poziom umiejętności {2}",i+1,tabela[i].name, tabela[i].skill);
             }
             */
-            int rozmiar,skill;
+            
+            while (true)
+            {
+                Console.Clear();
+                if (!Done)
+                    Menu();
+                else
+                    break;
+            }            
+        }
+        static void Menu()
+        {
+            int rozmiar, skill;
             string imie;
             Skoczek zawodnik;
             Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v2.0!");
-            Console.WriteLine("Proszę podaj rozmiar skoczni w metrach (minimum 50, zalecane maximum ok 20)");
+            Console.WriteLine("Proszę podaj rozmiar skoczni w metrach (minimum 50, zalecane maximum ok 200)");
             try
             {
                 rozmiar = int.Parse(Console.ReadLine());
@@ -69,25 +77,30 @@ namespace wat
             {
                 Console.WriteLine("To nie była liczba, spróbuj znowu");
             }
-            if (skill < 1||skill>10)
+            if (skill < 1 || skill > 10)
             {
                 Random why = new Random();
-                skill =why.Next(1,11);
-                Console.WriteLine("Podałeś poziom umiejętności spoza przedziału od 1 do 10, więc wylosowano dla Ciebe wartość {0}",skill);
+                skill = why.Next(1, 11);
+                Console.WriteLine("Podałeś poziom umiejętności spoza przedziału od 1 do 10, więc wylosowano dla Ciebie wartość {0}", skill);
             }
             Skocznia skocznia = new Skocznia(rozmiar);
-            zawodnik = new Skoczek(imie,skill);
+            zawodnik = new Skoczek(imie, skill);
 
             Skok skok;
             Console.WriteLine("Wszystko gotowe, naciśnij dowolny klawisz aby zobaczyć skok!");
             Console.ReadKey();
             Console.Clear();
             skocznia.buduj();
-            skok=skocznia.zjazd(zawodnik,1);
-            Console.Write("\n Skakał skoczek o imieniu {0}, o poziomie umiejętności {1}",zawodnik.name,zawodnik.skill);
-            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów",skok.noty[0],skok.noty[1],skok.noty[2],skok.noty[3],skok.noty[4],skok.odleglosc, skok.wynik());
-            Console.Write("\n Naciśnij dowolny klawisz aby wyjść");
-            Console.ReadKey();
+            skok = skocznia.zjazd(zawodnik, 1);
+            Console.Write("\n Skakał skoczek o imieniu {0}, o poziomie umiejętności {1}", zawodnik.name, zawodnik.skill);
+            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.wynik());
+            Console.Write("\n Siła wybicia = {0} i kąt lotu = {1}", skok.silawybicia, skok.katlotu);//debug
+            Console.WriteLine("\n Naciśnij 0 aby wrócić do konfiguracji skoku, lub dowolny inny klawisz aby wyjść");
+            
+            if(Console.ReadKey().KeyChar=='0')
+                Done = false;
+            else
+                Done = true;
             
         }
     }

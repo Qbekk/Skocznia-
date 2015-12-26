@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 namespace wat
 {
-	//buduje skocznie oraz odpowiada za zjazd skoczka po niej
-	public class Skocznia
+    //buduje skocznie oraz odpowiada za zjazd skoczka po niej
+    public class Skocznia
 	{
 		public int speed = 400;
 		public int rozmiar;
@@ -127,7 +123,7 @@ namespace wat
                         {
                         
                         zyje = false;
-                        kat = 2;
+                        kat = 3;
                         silawyb = 2;
                         }
                     }
@@ -240,7 +236,7 @@ namespace wat
                 	noty[i]=nota;
                 }
                 double metry=odleglosc*5+(double)ran.Next(0,10)/2;
-                zwrot=new Skok(skoczek,kolej,metry,rozmiar,noty);
+                zwrot=new Skok(skoczek,kolej,metry,rozmiar,noty,silawyb,kat);
                 return zwrot;
             }//zamyka zjazd
         }
