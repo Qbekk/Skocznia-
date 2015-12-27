@@ -5,7 +5,7 @@ namespace wat
     //buduje skocznie oraz odpowiada za zjazd skoczka po niej
     public class Skocznia
 	{
-		public int speed = 400;
+		
 		public int rozmiar;
 		Random ran = new Random();
 		public Skocznia(int roz)
@@ -14,6 +14,7 @@ namespace wat
 		}
 		public void buduj(){//buduje skocznię
 			string spacje = "";
+            Console.Clear();
             for (int i = 1; i <= rozmiar; i++)//nabieg
             {
                 Console.Write(spacje);
@@ -70,6 +71,7 @@ namespace wat
         }
         public Skok zjazd( Skoczek skoczek,int kolej)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
+            int speed = 400;
             int skill = skoczek.skill;
         	int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;

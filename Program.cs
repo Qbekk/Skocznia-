@@ -5,6 +5,8 @@ namespace wat
     {
         static bool Done = false;
         static Skoczek[] zawodnicy;
+        static Turniej Zawody;
+        static Skok[] Wyniki1;
         public static void Main(string[] args)
         {
             
@@ -43,7 +45,7 @@ namespace wat
         static void Menu()
         {
            
-            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v2.0!");
+            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.3!");
             Console.WriteLine("Wciśnij klawisz w ( ) aby wybrać.");
             Console.WriteLine("(1) Wykonaj pojedyńczy skok");
             Console.WriteLine("(2) Rozegraj konkurs na pojedyńczej skoczni");
@@ -60,7 +62,10 @@ namespace wat
             }
             else if (wybor.KeyChar == '2')
             {
-
+                Wyniki1 = new Skok[zawodnicy.Length];
+                Zawody = new Turniej(zawodnicy);
+                Wyniki1=Zawody.Rozegraj();
+                DisplayWyniki(Wyniki1);
             }
             else if (wybor.KeyChar == '3')
             {
@@ -201,7 +206,17 @@ namespace wat
             Console.WriteLine("Koniec listy zawodników! Naciśnij dowolny klawisz aby wócić do menu");
             Console.ReadKey();
         }
-
+        public static void DisplayWyniki(Skok[] wyniki)//do wyświetlania wyników konkursu na jednej skoczni
+        {
+            Console.WriteLine("Wyniki ostatniego konkursu:");
+            Console.WriteLine("Numer  Imię  Punkty  Odległość");
+            for (int i =0;i<wyniki.Length ;i++)
+            {
+                Console.WriteLine("{0} {1} {2:f1} {3:f1}m",wyniki[i].numer,wyniki[i].skoczek.name,wyniki[i].wynik(),wyniki[i].odleglosc);
+            }
+            Console.WriteLine("naciśnij dowolny klawisz aby wrócić do menu");
+            Console.ReadKey();
+        }
 
 
     }
