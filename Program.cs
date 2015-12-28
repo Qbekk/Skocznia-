@@ -7,32 +7,12 @@ namespace wat
         static Skoczek[] zawodnicy;
         static Turniej Zawody;
         static Skok[] Wyniki1;
+        static Skok[,] Wyniki2;
+        static Skocznia[] skocznie;
         public static void Main(string[] args)
         {
             
 			Console.SetWindowSize(120,55);
-            /*
-            int rozmiar, gracze, skill;
-            string imie;
-            Console.WriteLine("Witaj! Podaj rozmiar skoczni!");
-            rozmiar = int.Parse(Console.ReadLine());
-            Console.WriteLine("Podaj ilość skoczków!");
-            gracze = int.Parse(Console.ReadLine());
-            Skoczek[] tabela = new Skoczek[gracze];
-            for (int i = 0; i< gracze; i ++)
-                {
-                    Console.WriteLine("Podaj imię skoczka nr {0}",i+1);
-                    imie = Console.ReadLine();
-                    Console.WriteLine("Podaj poziom umiejętności (między 1, a 10) skoczka nr {0}", i+1);
-                    skill = int.Parse(Console.ReadLine());
-                    tabela[i] = new Skoczek(imie,skill);
-                }
-            for (int i = 0; i < gracze; i++)
-            {
-                Console.WriteLine("Skoczek {0} nazywa się {1} i ma poziom umiejętności {2}",i+1,tabela[i].name, tabela[i].skill);
-            }
-            */
-            
             while (true)
             {
                 Console.Clear();
@@ -45,14 +25,20 @@ namespace wat
         static void Menu()
         {
            
-            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.3!");
+            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.5!");
             Console.WriteLine("Wciśnij klawisz w ( ) aby wybrać.");
             Console.WriteLine("(1) Wykonaj pojedyńczy skok");
             Console.WriteLine("(2) Rozegraj konkurs na pojedyńczej skoczni");
             Console.WriteLine("(3) Rozegraj turniej na wielu skoczniach");
             Console.WriteLine("(4) Skonfiguruj listę zawodników do użytku w turnieju lub konkursie");
+            Console.WriteLine("(5) Skonfiguruj listę skoczni do użytku w turnieju");
+            if (Wyniki1 != null||Wyniki2!=null)
+                Console.WriteLine("(6) Wyświetl wyniki ostanich zawodów");
+            Console.WriteLine("\n");
             if (zawodnicy != null )
-                Console.WriteLine("(5) Wyświetl obecnie zapisaną listę zawodników");
+                Console.WriteLine("(7) Wyświetl obecnie zapisaną listę zawodników");
+            if (skocznie != null)
+                Console.WriteLine("(8) Wyświetl obecnie zapisaną listę skoczni");
             Console.WriteLine("(9) Wykonaj testowy skok o losowych parametrach na losowej skoczni");
             Console.WriteLine("\n\n(0) Wyjdź");
             ConsoleKeyInfo wybor = Console.ReadKey(true);
@@ -64,25 +50,36 @@ namespace wat
                     break;
                 case '2':
                     CfgZawodnicy();
-                    Wyniki1 = new Skok[zawodnicy.Length];
+                    Wyniki2 = null;
+                    Wyniki1= new Skok[zawodnicy.Length];
                     Zawody = new Turniej(zawodnicy);
                     Wyniki1 = Zawody.Rozegraj();
                     DisplayWyniki(Wyniki1);
                     break;
                 case '3':
-
+                    CfgZawodnicy();
+                    CfgSkocznie();
+                    Wyniki1 = null;
+                    Wyniki2 = new Skok[skocznie.Length, zawodnicy.Length];
+                    Zawody = new Turniej(zawodnicy);
+                    Wyniki2 = Zawody.Rozegraj(skocznie);
+                    DisplayWyniki(Wyniki2);
                     break;
                 case '4':
                     CfgZawodnicy();
                     break;
                 case '5':
-                    if(zawodnicy!=null)
-                    DisplayZawodnicy();
+                    CfgSkocznie();
                     break;
                 case '6':
-
+                    if (Wyniki1 != null)
+                        DisplayWyniki(Wyniki1);
+                    else if (Wyniki2 != null)
+                        DisplayWyniki(Wyniki2);
                     break;
                 case '7':
+                    if (zawodnicy != null)
+                        DisplayZawodnicy();
 
                     break;
                 case '8':
@@ -236,6 +233,67 @@ namespace wat
             Console.WriteLine("Koniec listy zawodników! Naciśnij dowolny klawisz aby wócić do menu");
             Console.ReadKey();
         }
+        public static void CfgSkocznie()
+        {
+
+            uint ilosc;
+            int rozmiar;
+            bool? nadpisz = null;
+            Console.WriteLine("Konfiguracja skoczni");
+            if (skocznie != null)
+            {
+                Console.WriteLine("Wykryto listę skoczni w pamięci. Czy chcesz ja nadpisać?(y/n)");
+                while (nadpisz == null)
+                {
+                    ConsoleKeyInfo wybor = Console.ReadKey(true);
+                    if (wybor.KeyChar == 'y')
+                        nadpisz = true;
+                    else if (wybor.KeyChar == 'n')
+                        nadpisz = false;
+                }
+            }
+            else
+            {
+                nadpisz = true;
+            }
+            if (nadpisz==true)
+            {
+                Console.WriteLine("Ile będzie skoczni? (min 1, max 12)");
+                while (!uint.TryParse(Console.ReadLine(), out ilosc) && ilosc > 0 && ilosc < 13)
+                {
+                    Console.WriteLine("To nie była dozwolona liczba, spróbuj znowu");
+                }
+
+                skocznie = new Skocznia[ilosc];
+            }
+            for (int i = 0; i < skocznie.Length; i++)
+            {
+                Console.WriteLine("Podaj rozmiar skoczni nr {0} (min 50m, max ok 250m)",i+1);
+                while (!int.TryParse(Console.ReadLine(), out rozmiar))
+                {
+                    Console.WriteLine("To nie była liczba, spróbuj znowu");
+                }
+                if (rozmiar<50)
+                {
+                    Console.WriteLine("Podałeś wartość poniżej 50m, przyjmuję rozmiar domyślny = 140m");
+                    rozmiar = 140;
+                }
+                rozmiar /= 10;
+                skocznie[i] = new Skocznia(rozmiar);
+            }
+        }
+        public static void DisplaySkocznie()
+        {
+            Console.WriteLine("Obecnie zapisanych jest {0} skoczni", skocznie.Length);
+            for (int i = 0; i < skocznie.Length; i++)
+            {
+                Console.WriteLine("Skocznia nr {0} o rozmiarze {1} metrów", i+1, skocznie[i].rozmiar);
+            }
+            Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
+            Console.ReadKey();
+        }
+
+
         public static void DisplayWyniki(Skok[] wyniki)//do wyświetlania wyników konkursu na jednej skoczni
         {
             Console.WriteLine("Wyniki ostatniego konkursu:");
@@ -247,9 +305,24 @@ namespace wat
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
         }
+        public static void DisplayWyniki(Skok[,] wyniki)
+        {
+            Console.WriteLine("Wyniki ostaniego turnieju ({0} skoczni)",wyniki.GetLength(0));
+            for (int i = 0; i < wyniki.GetLength(0); i++)
+            {
+                Console.WriteLine("Wyniki dla skoczni numer {0}",i+1);
+                Console.WriteLine("Numer  Imię  Punkty  Odległość");
+                for (int j = 0; j < wyniki.GetLength(1); j++)
+                {
+                    Console.WriteLine("{0} {1} {2:f1} {3:f1}m", wyniki[i,j].numer, wyniki[i,j].skoczek.name, wyniki[i,j].wynik(), wyniki[i,j].odleglosc);
+                }
 
 
-
+            }
+            Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
+            Console.ReadKey(true);
+            
+        }
         public static void Test()
         {
             string imie = "Tester";
