@@ -32,6 +32,7 @@ namespace wat
                 Console.WriteLine("Podałeś rozmiar skoczni poniżej minimum 50m, więc ustawiam go na 50m");
             }
             rozmiar /= 10;
+
             skocznia = new Skocznia(rozmiar);
             wyniki = new Skok[zawodnicy.Length];
             for (int i = 0; i < zawodnicy.Length; i++)

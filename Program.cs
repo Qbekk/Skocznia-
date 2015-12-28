@@ -53,39 +53,50 @@ namespace wat
             Console.WriteLine("(4) Skonfiguruj listę zawodników do użytku w turnieju lub konkursie");
             if (zawodnicy != null )
                 Console.WriteLine("(5) Wyświetl obecnie zapisaną listę zawodników");
+            Console.WriteLine("(9) Wykonaj testowy skok o losowych parametrach na losowej skoczni");
             Console.WriteLine("\n\n(0) Wyjdź");
             ConsoleKeyInfo wybor = Console.ReadKey(true);
-            if (wybor.KeyChar == '1')
-            {
-                JedenSkok();
 
-            }
-            else if (wybor.KeyChar == '2')
+            switch (wybor.KeyChar)
             {
-                Wyniki1 = new Skok[zawodnicy.Length];
-                Zawody = new Turniej(zawodnicy);
-                Wyniki1=Zawody.Rozegraj();
-                DisplayWyniki(Wyniki1);
-            }
-            else if (wybor.KeyChar == '3')
-            {
+                case '1':
+                    JedenSkok();
+                    break;
+                case '2':
+                    CfgZawodnicy();
+                    Wyniki1 = new Skok[zawodnicy.Length];
+                    Zawody = new Turniej(zawodnicy);
+                    Wyniki1 = Zawody.Rozegraj();
+                    DisplayWyniki(Wyniki1);
+                    break;
+                case '3':
 
-            }
-            else if (wybor.KeyChar == '4')
-            {
-                CfgZawodnicy();
-            }
-            else if (wybor.KeyChar == '5')
-            {
-                DisplayZawodnicy();
-            }
+                    break;
+                case '4':
+                    CfgZawodnicy();
+                    break;
+                case '5':
+                    if(zawodnicy!=null)
+                    DisplayZawodnicy();
+                    break;
+                case '6':
 
-            else if (wybor.KeyChar == '0')
-                Done = true;
-                
-            
-            
-            
+                    break;
+                case '7':
+
+                    break;
+                case '8':
+
+                    break;
+                case '9':
+                    Test();
+                    break;
+                case '0':
+                    Done = true;
+                    break;
+                default:
+                    break;
+            }   
         }
         public static void JedenSkok()
         {
@@ -156,44 +167,63 @@ namespace wat
             uint ilosc;
             string imie;
             int skill;
-
-
-            Console.WriteLine("Ilu będzie zawodników? (min 1, max 30)");
-            while (!uint.TryParse(Console.ReadLine(), out ilosc)&&ilosc>0&&ilosc <31)
+            bool? nadpisz=null;
+            Console.WriteLine("Konfiguracja zawodników");
+            if (zawodnicy != null)
             {
-                Console.WriteLine("To nie była dozwolona liczba, spróbuj znowu");
-            }
-
-            zawodnicy = new Skoczek[ilosc];
-            for (int i = 0; i < ilosc; i++)
-            {
-                Console.WriteLine("Podaj imię zawodnika ({0} z {1})",i+1,ilosc);
-                while (true)
+                Console.WriteLine("Wykryto listę zawodników w pamięci. Czy chcesz ja nadpisać?(y/n)");
+                while (nadpisz == null)
                 {
-                    imie = Console.ReadLine();
-                    if (String.IsNullOrWhiteSpace(imie))
+                    ConsoleKeyInfo wybor = Console.ReadKey(true);
+                    if (wybor.KeyChar == 'y')
+                        nadpisz = true;
+                    else if (wybor.KeyChar == 'n')
+                        nadpisz = false;
+                }
+            }
+            else
+            {
+                nadpisz = true;
+            }
+            if (nadpisz == true)
+            {
+                Console.WriteLine("Ilu będzie zawodników? (min 1, max 30)");
+                while (!uint.TryParse(Console.ReadLine(), out ilosc) && ilosc > 0 && ilosc < 31)
+                {
+                    Console.WriteLine("To nie była dozwolona liczba, spróbuj znowu");
+                }
+
+                zawodnicy = new Skoczek[ilosc];
+                for (int i = 0; i < ilosc; i++)
+                {
+                    Console.WriteLine("Podaj imię zawodnika ({0} z {1})", i + 1, ilosc);
+                    while (true)
                     {
-                        Console.WriteLine("Imię nie może być puste, spróbuj ponownie");
+                        imie = Console.ReadLine();
+                        if (String.IsNullOrWhiteSpace(imie))
+                        {
+                            Console.WriteLine("Imię nie może być puste, spróbuj ponownie");
+                        }
+                        else
+                            break;
                     }
-                    else
-                        break;
+                    Console.WriteLine("Podaj poziom umiejętności zawodnika {0}, z zakresu od 1 do 10 włącznie. Wartości z poza zakresu=wartość losowa", imie);
+                    while (!int.TryParse(Console.ReadLine(), out skill))
+                    {
+                        Console.WriteLine("To nie była liczba, spróbuj znowu");
+                    }
+                    if (skill < 1 || skill > 10)
+                    {
+                        Random why = new Random();
+                        skill = why.Next(1, 11);
+                        Console.WriteLine("Podałeś poziom umiejętności spoza przedziału od 1 do 10, więc wylosowano dla Ciebie wartość {0}", skill);
+                    }
+                    zawodnicy[i] = new Skoczek(imie, skill);
+                    Console.WriteLine("Dodano zawodnika nr {0} o imieniu {1} i poziomie umiejętności {2}", i + 1, imie, skill);
                 }
-                Console.WriteLine("Podaj poziom umiejętności zawodnika {0}, z zakresu od 1 do 10 włącznie. Wartości z poza zakresu=wartość losowa",imie);
-                while (!int.TryParse(Console.ReadLine(), out skill))
-                {
-                    Console.WriteLine("To nie była liczba, spróbuj znowu");
-                }
-                if (skill < 1 || skill > 10)
-                {
-                    Random why = new Random();
-                    skill = why.Next(1, 11);
-                    Console.WriteLine("Podałeś poziom umiejętności spoza przedziału od 1 do 10, więc wylosowano dla Ciebie wartość {0}", skill);
-                }
-                zawodnicy[i] = new Skoczek(imie, skill);
-                Console.WriteLine("Dodano zawodnika nr {0} o imieniu {1} i poziomie umiejętności {2}",i+1,imie,skill);
+                Console.WriteLine("Zakończono konfigurację {0} zawodników! Naciśnij dowolny klawisz aby wrócić do menu", ilosc);
+                Console.ReadKey();
             }
-            Console.WriteLine("Zakończono konfigurację {0} zawodników! Naciśnij dowolny klawisz aby wrócić do menu",ilosc);
-            Console.ReadKey();
         }
         public static void DisplayZawodnicy ()
         {
@@ -214,10 +244,31 @@ namespace wat
             {
                 Console.WriteLine("{0} {1} {2:f1} {3:f1}m",wyniki[i].numer,wyniki[i].skoczek.name,wyniki[i].wynik(),wyniki[i].odleglosc);
             }
-            Console.WriteLine("naciśnij dowolny klawisz aby wrócić do menu");
+            Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
         }
 
 
+
+        public static void Test()
+        {
+            string imie = "Tester";
+            int rozmiar, skill;
+            Skoczek zawodnik;
+            Skocznia skocznia;
+            Skok skok;
+            Random zycie = new Random();
+            skill = zycie.Next(1, 11);
+            rozmiar = zycie.Next(5,23);
+            zawodnik = new Skoczek(imie,skill);
+            skocznia = new Skocznia(rozmiar);
+            skocznia.buduj();
+            skok = skocznia.zjazd(zawodnik,1);
+            Console.Write("\n Skakał skoczek o imieniu {0}, o poziomie umiejętności {1}", zawodnik.name, zawodnik.skill);
+            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.wynik());
+            Console.Write("\n Rozmiar skoczni {0} m Siła wybicia = {1} i kąt lotu = {2}",skocznia.rozmiar*10 ,skok.silawybicia, skok.katlotu);//debug
+            Console.WriteLine("\n Naciśnij dowolny klawisz aby wrócić do menu głównego");
+            Console.ReadKey();
+        }
     }
 }
