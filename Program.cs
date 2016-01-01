@@ -9,7 +9,7 @@ namespace wat
         static Skoczek[] zawodnicy;
         static Turniej Zawody;
         static Skok[] Wyniki1;
-        static Skok[,] Wyniki2;
+        static Skok[][] Wyniki2;
         static Skocznia[] skocznie;
         public static void Main(string[] args)
         {
@@ -62,7 +62,13 @@ namespace wat
                     CfgZawodnicy();
                     CfgSkocznie();
                     Wyniki1 = null;
-                    Wyniki2 = new Skok[skocznie.Length, zawodnicy.Length];
+                    Wyniki2 = new Skok[skocznie.Length][];
+                    for (int i = 0; i < Wyniki2.Length; i++)
+                    {
+                        Wyniki2[i] = new Skok[zawodnicy.Length];
+                    }
+
+                    
                     Zawody = new Turniej(zawodnicy);
                     Wyniki2 = Zawody.Rozegraj(skocznie);
                     DisplayWyniki(Wyniki2);
@@ -223,7 +229,7 @@ namespace wat
                     zawodnicy[i] = new Skoczek(imie, skill);
                     Console.WriteLine("Dodano zawodnika nr {0} o imieniu {1} i poziomie umiejętności {2}", i + 1, imie, skill);
                 }
-                Console.WriteLine("Zakończono konfigurację {0} zawodników! Naciśnij dowolny klawisz aby wrócić do menu", ilosc);
+                Console.WriteLine("Zakończono konfigurację {0} zawodników! Naciśnij dowolny klawisz.", ilosc);
                 Console.ReadKey();
             }
         }
@@ -235,7 +241,7 @@ namespace wat
                 Console.WriteLine("Zawodnik nr {0} o imieniu {1} i poziomie umiejętności {2}",i+1,zawodnicy[i].name,zawodnicy[i].skill);
 
             }
-            Console.WriteLine("Koniec listy zawodników! Naciśnij dowolny klawisz aby wócić do menu");
+            Console.WriteLine("Koniec listy zawodników! Naciśnij dowolny klawisz aby wrócić do menu");
             Console.ReadKey();
         }
         public static void CfgSkocznie()
@@ -286,6 +292,8 @@ namespace wat
                 rozmiar /= 10;
                 skocznie[i] = new Skocznia(rozmiar);
             }
+            Console.WriteLine("konfiguracja skoczni zakończona, naciśnij dowolny klawisz.");
+            Console.ReadKey();
         }
         public static void DisplaySkocznie()
         {
@@ -297,7 +305,7 @@ namespace wat
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
         }
-        public static string Naglowek = "Poz Nr Imię                 Pkt   Odl   Noty";
+        public static string Naglowek = "Poz Nr Imię               Pkt   Odl   Noty";
         public static string Linia(int pozycja ,int numer, string name, double punkty, double odleglosc, double[] noty )
         {
             string poz;
@@ -336,22 +344,18 @@ namespace wat
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
         }
-        public static void DisplayWyniki(Skok[,] wyniki)
+        public static void DisplayWyniki(Skok[][] wyniki)//na wielu skoczniach
         {
             Console.WriteLine("Wyniki ostaniego turnieju ({0} skoczni)",wyniki.GetLength(0));
             for (int i = 0; i < wyniki.GetLength(0); i++)
             {
-                /*
-                Skok[] a =new Skok[wyniki.GetLength(0)];
-                a = wyniki[i].Clone();
-
-                Wyniki2[i] = wyniki[i].OrderByDescending(Skok[] => Skok[].wynik).ToArray();
-                */
+                
+                Wyniki2[i] = wyniki[i].OrderByDescending(Skok => Skok.wynik).ToArray();
                 Console.WriteLine("Wyniki dla skoczni numer {0}",i+1);
                 Console.WriteLine(Naglowek);
-                for (int j = 0; j < wyniki.GetLength(1); j++)
+                for (int j = 0; j < wyniki[i].Length; j++)
                 {
-                    Console.WriteLine(Linia(j+1, wyniki[i,j].numer, wyniki[i,j].skoczek.name, wyniki[i,j].Wynik(), wyniki[i,j].odleglosc,wyniki[i,j].noty));
+                    Console.WriteLine(Linia(j+1, wyniki[i][j].numer, wyniki[i][j].skoczek.name, wyniki[i][j].Wynik(), wyniki[i][j].odleglosc,wyniki[i][j].noty));
                 }
 
 
