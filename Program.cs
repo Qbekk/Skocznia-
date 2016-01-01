@@ -25,7 +25,7 @@ namespace wat
         static void Menu()
         {
            
-            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.5!");
+            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.6! Zaprogramowane przez Qbek Studios");
             Console.WriteLine("Wciśnij klawisz w ( ) aby wybrać.");
             Console.WriteLine("(1) Wykonaj pojedyńczy skok");
             Console.WriteLine("(2) Rozegraj konkurs na pojedyńczej skoczni");
@@ -83,7 +83,8 @@ namespace wat
 
                     break;
                 case '8':
-
+                    if (skocznie != null)
+                        DisplaySkocznie();
                     break;
                 case '9':
                     Test();
@@ -148,7 +149,7 @@ namespace wat
             skocznia.buduj();
             skok = skocznia.zjazd(zawodnik, 1);
             Console.Write("\n Skakał skoczek o imieniu {0}, o poziomie umiejętności {1}", zawodnik.name, zawodnik.skill);
-            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.wynik());
+            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.Wynik());
             Console.Write("\n Siła wybicia = {0} i kąt lotu = {1}", skok.silawybicia, skok.katlotu);//debug
             Console.WriteLine("\n Naciśnij 0 aby wyjść, lub dowolny inny klawisz aby wrócić do menu głównego");
 
@@ -193,7 +194,7 @@ namespace wat
                 zawodnicy = new Skoczek[ilosc];
                 for (int i = 0; i < ilosc; i++)
                 {
-                    Console.WriteLine("Podaj imię zawodnika ({0} z {1})", i + 1, ilosc);
+                    Console.WriteLine("Podaj imię zawodnika, nie dłuższe niż 18 znaków ({0} z {1})", i + 1, ilosc);
                     while (true)
                     {
                         imie = Console.ReadLine();
@@ -201,6 +202,8 @@ namespace wat
                         {
                             Console.WriteLine("Imię nie może być puste, spróbuj ponownie");
                         }
+                        else if (imie.Length<1||imie.Length>18)
+                            Console.WriteLine("Imię nie może być dłuższe niż 18 znaków, twoje miało {0}, spróbuj ponownie",imie.Length);
                         else
                             break;
                     }
@@ -292,15 +295,39 @@ namespace wat
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
         }
-
+        public static string Naglowek = "Poz Nr Imię                 Pkt   Odl   Noty";
+        public static string Linia(int pozycja ,int numer, string name, double punkty, double odleglosc, double[] noty )
+        {
+            string poz;
+            string nr;
+            string imie=name;
+            string pkt= String.Format("{0:f1}",punkty);
+            string odl= String.Format("{0:f1}",odleglosc);
+            string not= String.Format("1: {0:f1} 2: {1:f1} 3: {2:f1} 4: {3:f1} 5: {4:f1}", noty[0], noty[1], noty[2], noty[3], noty[4]);
+            if (pozycja.ToString().Length == 2)
+                poz = pozycja.ToString();
+            else
+                poz = " "+ pozycja.ToString();
+            if (numer.ToString().Length == 2)
+                nr = numer.ToString();
+            else
+                nr = " " + numer.ToString();
+            for (int i = 0; i < 18 - name.Length; i++)
+                imie += " ";
+            for (int i = 0; i < 5-pkt.Length; i++)
+                pkt = " "+pkt;
+            for (int i = 0; i < 5 - odl.Length; i++)
+                odl = " " + odl;
+            return " "+poz+" "+nr+" "+imie+" "+pkt+" "+odl+" "+not;
+        }
 
         public static void DisplayWyniki(Skok[] wyniki)//do wyświetlania wyników konkursu na jednej skoczni
         {
             Console.WriteLine("Wyniki ostatniego konkursu:");
-            Console.WriteLine("Numer  Imię  Punkty  Odległość");
+            Console.WriteLine(Naglowek);
             for (int i =0;i<wyniki.Length ;i++)
             {
-                Console.WriteLine("{0} {1} {2:f1} {3:f1}m",wyniki[i].numer,wyniki[i].skoczek.name,wyniki[i].wynik(),wyniki[i].odleglosc);
+                Console.WriteLine(Linia(i+1,wyniki[i].numer,wyniki[i].skoczek.name,wyniki[i].Wynik(),wyniki[i].odleglosc,wyniki[i].noty));
             }
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
@@ -311,10 +338,10 @@ namespace wat
             for (int i = 0; i < wyniki.GetLength(0); i++)
             {
                 Console.WriteLine("Wyniki dla skoczni numer {0}",i+1);
-                Console.WriteLine("Numer  Imię  Punkty  Odległość");
+                Console.WriteLine(Naglowek);
                 for (int j = 0; j < wyniki.GetLength(1); j++)
                 {
-                    Console.WriteLine("{0} {1} {2:f1} {3:f1}m", wyniki[i,j].numer, wyniki[i,j].skoczek.name, wyniki[i,j].wynik(), wyniki[i,j].odleglosc);
+                    Console.WriteLine(Linia(j+1, wyniki[i,j].numer, wyniki[i,j].skoczek.name, wyniki[i,j].Wynik(), wyniki[i,j].odleglosc,wyniki[i,j].noty));
                 }
 
 
@@ -338,7 +365,7 @@ namespace wat
             skocznia.buduj();
             skok = skocznia.zjazd(zawodnik,1);
             Console.Write("\n Skakał skoczek o imieniu {0}, o poziomie umiejętności {1}", zawodnik.name, zawodnik.skill);
-            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.wynik());
+            Console.Write("\n Noty sędziów 1: {0:f1}   2: {1:f1}   3: {2:f1}   4: {3:f1}   5: {4:f1}\n Odleglosc {5:f1} m\n Wynik: {6:f2} punktów", skok.noty[0], skok.noty[1], skok.noty[2], skok.noty[3], skok.noty[4], skok.odleglosc, skok.Wynik());
             Console.Write("\n Rozmiar skoczni {0} m Siła wybicia = {1} i kąt lotu = {2}",skocznia.rozmiar*10 ,skok.silawybicia, skok.katlotu);//debug
             Console.WriteLine("\n Naciśnij dowolny klawisz aby wrócić do menu głównego");
             Console.ReadKey();

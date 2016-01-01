@@ -8,9 +8,10 @@ namespace wat
 	public class Skok
 	{
 		public int numer,rozmiar, silawybicia, katlotu;
-		public double odleglosc;
+		public double odleglosc, wynik;
 		public Skoczek skoczek;
 		public double[] noty;
+        
 		public Skok(Skoczek skoczek,int numer, double odleglosc,int rozmiar, double[] noty,int silawybicia,int katlotu)
 		{
 			this.skoczek=skoczek;
@@ -20,9 +21,9 @@ namespace wat
 			this.rozmiar=rozmiar;
             this.silawybicia = silawybicia;
             this.katlotu = katlotu;
-
+            this.wynik = Wynik();
         }
-		public double wynik(){
+		public double Wynik(){
 			double result=0;
 			double mnoznik=1;
             double baza = 60;

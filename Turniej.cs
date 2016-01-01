@@ -38,7 +38,7 @@ namespace wat
             {
                 skocznia.buduj();
                 wyniki[i] = skocznia.zjazd(zawodnicy[i],i+1);
-                Console.WriteLine("\nSkok zawodnika {0} wykonany! Na odległość {1:f1}m i z wynikiem {2:f2} pkt",zawodnicy[i].name,wyniki[i].odleglosc ,wyniki[i].wynik());
+                Console.WriteLine("\nSkok zawodnika {0} wykonany! Na odległość {1:f1}m i z wynikiem {2:f2} pkt",zawodnicy[i].name,wyniki[i].odleglosc ,wyniki[i].Wynik());
                 Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
                 Console.ReadKey();
             }
@@ -56,7 +56,7 @@ namespace wat
                 {
                     skocznie[i].buduj();
                     wyniki[i,j] =skocznie[i].zjazd(zawodnicy[j],j+1);
-                    Console.WriteLine("\nSkok zawodnika {0} wykonany! Na odległość {1:f1}m i z wynikiem {2:f2} pkt",zawodnicy[j].name ,wyniki[i,j].odleglosc, wyniki[i,j].wynik());
+                    Console.WriteLine("\nSkok zawodnika {0} wykonany! Na odległość {1:f1}m i z wynikiem {2:f2} pkt",zawodnicy[j].name ,wyniki[i,j].odleglosc, wyniki[i,j].Wynik());
                     Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
                     Console.ReadKey();
                 }
