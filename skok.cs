@@ -6,8 +6,9 @@ namespace wat
     //przechowuje dane pojedyńczego skoku
     //doużytku przy wyświetlaniu wyników
 	public class Skok
-	{
-		public int numer,rozmiar, silawybicia, katlotu;
+    {
+        
+        public int numer,rozmiar, silawybicia, katlotu;
 		public double odleglosc, wynik;
 		public Skoczek skoczek;
 		public double[] noty;
@@ -48,6 +49,9 @@ namespace wat
             if (result < 0)
                 result = 0;
 			return result;
+
 		}
-	}
+        
+    }
+    
 }

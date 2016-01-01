@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections;
 namespace wat
 {
     public class Program
@@ -323,11 +325,13 @@ namespace wat
 
         public static void DisplayWyniki(Skok[] wyniki)//do wyświetlania wyników konkursu na jednej skoczni
         {
+            Wyniki1 = wyniki.OrderByDescending(Skok => Skok.wynik).ToArray();
+
             Console.WriteLine("Wyniki ostatniego konkursu:");
             Console.WriteLine(Naglowek);
-            for (int i =0;i<wyniki.Length ;i++)
+            for (int i =0;i< Wyniki1.Length ;i++)
             {
-                Console.WriteLine(Linia(i+1,wyniki[i].numer,wyniki[i].skoczek.name,wyniki[i].Wynik(),wyniki[i].odleglosc,wyniki[i].noty));
+                Console.WriteLine(Linia(i+1, Wyniki1[i].numer, Wyniki1[i].skoczek.name, Wyniki1[i].Wynik(), Wyniki1[i].odleglosc, Wyniki1[i].noty));
             }
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
@@ -337,6 +341,12 @@ namespace wat
             Console.WriteLine("Wyniki ostaniego turnieju ({0} skoczni)",wyniki.GetLength(0));
             for (int i = 0; i < wyniki.GetLength(0); i++)
             {
+                /*
+                Skok[] a =new Skok[wyniki.GetLength(0)];
+                a = wyniki[i].Clone();
+
+                Wyniki2[i] = wyniki[i].OrderByDescending(Skok[] => Skok[].wynik).ToArray();
+                */
                 Console.WriteLine("Wyniki dla skoczni numer {0}",i+1);
                 Console.WriteLine(Naglowek);
                 for (int j = 0; j < wyniki.GetLength(1); j++)
