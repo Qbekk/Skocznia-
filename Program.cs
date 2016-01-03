@@ -14,7 +14,7 @@ namespace wat
         public static void Main(string[] args)
         {
             
-			Console.SetWindowSize(120,55);
+			Console.SetWindowSize(125,55);
             while (true)
             {
                 Console.Clear();
@@ -27,7 +27,7 @@ namespace wat
         static void Menu()
         {
            
-            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.9! Zaprogramowane przez Qbek Studios");
+            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v3.0! Zaprogramowane przez Qbek Studios");
             Console.WriteLine("Wciśnij klawisz w ( ) aby wybrać.");
             Console.WriteLine("(1) Wykonaj pojedyńczy skok");
             Console.WriteLine("(2) Rozegraj konkurs na pojedyńczej skoczni");
@@ -233,7 +233,7 @@ namespace wat
                     Console.WriteLine("Dodano zawodnika nr {0} o imieniu {1} i poziomie umiejętności {2}", i + 1, imie, skill);
                 }
                 Console.WriteLine("Zakończono konfigurację {0} zawodników! Naciśnij dowolny klawisz.", ilosc);
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
         }
         public static void DisplayZawodnicy ()
@@ -270,40 +270,40 @@ namespace wat
             {
                 nadpisz = true;
             }
-            if (nadpisz==true)
+            if (nadpisz == true)
             {
-                Console.WriteLine("Ile będzie skoczni? (min 1, max 12)");
-                while (!uint.TryParse(Console.ReadLine(), out ilosc) && ilosc > 0 && ilosc < 13)
+                Console.WriteLine("Ile będzie skoczni? (min 2, max 12)");
+                while (!uint.TryParse(Console.ReadLine(), out ilosc) || (ilosc <= 1 || ilosc >= 13))
                 {
                     Console.WriteLine("To nie była dozwolona liczba, spróbuj znowu");
                 }
 
                 skocznie = new Skocznia[ilosc];
-            }
-            for (int i = 0; i < skocznie.Length; i++)
-            {
-                Console.WriteLine("Podaj rozmiar skoczni nr {0} (min 50m, max ok 250m)",i+1);
-                while (!int.TryParse(Console.ReadLine(), out rozmiar))
+                for (int i = 0; i < skocznie.Length; i++)
                 {
-                    Console.WriteLine("To nie była liczba, spróbuj znowu");
+                    Console.WriteLine("Podaj rozmiar skoczni nr {0} (min 50m, max ok 250m)", i + 1);
+                    while (!int.TryParse(Console.ReadLine(), out rozmiar))
+                    {
+                        Console.WriteLine("To nie była liczba, spróbuj znowu");
+                    }
+                    if (rozmiar < 50)
+                    {
+                        Console.WriteLine("Podałeś wartość poniżej 50m, przyjmuję rozmiar domyślny = 140m");
+                        rozmiar = 140;
+                    }
+                    rozmiar /= 10;
+                    skocznie[i] = new Skocznia(rozmiar);
                 }
-                if (rozmiar<50)
-                {
-                    Console.WriteLine("Podałeś wartość poniżej 50m, przyjmuję rozmiar domyślny = 140m");
-                    rozmiar = 140;
-                }
-                rozmiar /= 10;
-                skocznie[i] = new Skocznia(rozmiar);
+                Console.WriteLine("Konfiguracja skoczni zakończona, naciśnij dowolny klawisz.");
+                Console.ReadKey(true);
             }
-            Console.WriteLine("konfiguracja skoczni zakończona, naciśnij dowolny klawisz.");
-            Console.ReadKey();
         }
         public static void DisplaySkocznie()
         {
             Console.WriteLine("Obecnie zapisanych jest {0} skoczni", skocznie.Length);
             for (int i = 0; i < skocznie.Length; i++)
             {
-                Console.WriteLine("Skocznia nr {0} o rozmiarze {1} metrów", i+1, skocznie[i].rozmiar);
+                Console.WriteLine("Skocznia nr {0} o rozmiarze {1} metrów", i+1, skocznie[i].rozmiar*10);
             }
             Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
             Console.ReadKey();
@@ -316,7 +316,7 @@ namespace wat
             string imie=name;
             string pkt= String.Format("{0:f1}",punkty);
             string odl= String.Format("{0:f1}",odleglosc);
-            string not= String.Format("1: {0:f1} 2: {1:f1} 3: {2:f1} 4: {3:f1} 5: {4:f1}", noty[0], noty[1], noty[2], noty[3], noty[4]);
+            
             if (pozycja.ToString().Length == 2)
                 poz = pozycja.ToString();
             else
@@ -325,12 +325,24 @@ namespace wat
                 nr = numer.ToString();
             else
                 nr = " " + numer.ToString();
-            for (int i = 0; i < 18 - name.Length; i++)
+            while(18 > imie.Length)
+            {
                 imie += " ";
-            for (int i = 0; i < 5-pkt.Length; i++)
-                pkt = " "+pkt;
-            for (int i = 0; i < 5 - odl.Length; i++)
+            }
+            while (5 > pkt.Length)
+            {
+                pkt = " " + pkt;
+            }
+            while (5 > odl.Length)
+            {
                 odl = " " + odl;
+            }
+            string n1 =( String.Format("{0:f1}", noty[0]).Length==4)?String.Format("{0:f1}", noty[0]): " "+String.Format("{0:f1}", noty[0]);
+            string n2 = (String.Format("{0:f1}", noty[1]).Length == 4) ? String.Format("{0:f1}", noty[1]): " " + String.Format("{0:f1}", noty[1]);
+            string n3 = (String.Format("{0:f1}", noty[2]).Length == 4) ? String.Format("{0:f1}", noty[2]): " " + String.Format("{0:f1}", noty[2]);
+            string n4 = (String.Format("{0:f1}", noty[3]).Length == 4) ? String.Format("{0:f1}", noty[3]): " " + String.Format("{0:f1}", noty[3]);
+            string n5 = (String.Format("{0:f1}", noty[4]).Length == 4) ? String.Format("{0:f1}", noty[4]): " " + String.Format("{0:f1}", noty[4]);
+            string not ="1: "+n1+" 2:"+n2+" 3:"+n3+" 4:"+n4+" 5:"+n5;
             return " "+poz+" "+nr+" "+imie+" "+pkt+" "+odl+" "+not;
         }
 

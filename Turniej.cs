@@ -96,6 +96,7 @@ namespace wat
                         {
                             klasyfikacja[j].punkty+=punktacja[k];
                             klasyfikacja[j].zmiana = punktacja[k];
+                            break;
                         }
                     }
                 }
@@ -105,25 +106,32 @@ namespace wat
             return wyniki;
         }
         public string Naglowek = "Poz Imię               Pkt  Zmiana";
-        public string LiniaRanking(int pozycja,string name,int punkty,int change)
+        public string LiniaRanking(int pozycja, string name, int punkty, int change)
         {
             string poz;
-            string imie=name;
-            string pkt=punkty.ToString();
-            string zmiana=change.ToString();
+            string imie = name;
+            string pkt = punkty.ToString();
+            string zmiana = change.ToString();
+            zmiana = "+" + zmiana;
             if (pozycja.ToString().Length == 2)
                 poz = pozycja.ToString();
             else
                 poz = " " + pozycja.ToString();
 
-            for (int i = 0; i < 18 - name.Length; i++)
+            while (18 > imie.Length)
+            {
                 imie += " ";
-            for (int i = 0; i < 4 - pkt.Length; i++)
+            }
+            while (5 > pkt.Length)
+            {
                 pkt = " " + pkt;
-            for (int i = 0; i < 3 - zmiana.Length; i++)
+            }
+            while (4 > zmiana.Length)
+            { 
                 zmiana = " " + zmiana;
-
-            return " "+poz+" "+imie+" "+pkt+" +"+zmiana;
+            }
+            
+            return " "+poz+" "+imie+" "+pkt+" "+zmiana;
         }
         public void DisplayRanking()
         {
