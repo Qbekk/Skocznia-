@@ -85,6 +85,7 @@ namespace wat
             int odleglosc=0;
             if (silawyb == 2 && kat == 2)
                 silawyb = 3;
+            Console.Write("Skok zawodnika {0}",skoczek.name);
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);

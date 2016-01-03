@@ -9,14 +9,33 @@ namespace wat
     public class Turniej
     {
         Skoczek[] zawodnicy;
-
+        int[] punktacja = new int[] {100,80,60,50,45,40,36,32,29,26,24,22,20,18,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1 };
+        Ranking[] klasyfikacja;
         public Turniej(Skoczek[] zawodnicy)
         {
             this.zawodnicy = zawodnicy;
-
+            klasyfikacja = new Ranking[zawodnicy.Length];
+            for (int i = 0; i < klasyfikacja.Length; i++)
+            {
+                klasyfikacja[i] = new Ranking(zawodnicy[i]);
+            }
+            
         }
 
-        public Skok[] Rozegraj() //do pojedyńczego konkursu
+        public class Ranking{//przypisuje liczbę punktów pucharowych do skoczka
+            public Skoczek zawodnik;
+            public int punkty = 0;
+            public int zmiana = 0;
+            public Ranking(Skoczek zawodnik)
+            {
+                this.zawodnik = zawodnik;
+                
+            }
+        }
+
+            
+
+    public Skok[] Rozegraj() //do pojedyńczego konkursu
         {
             Skok[] wyniki;
             Skocznia skocznia;
@@ -45,10 +64,12 @@ namespace wat
 
             return wyniki;
         }
-        public Skok[][] Rozegraj(Skocznia[] skocznie)
+        public Skok[][] Rozegraj(Skocznia[] skocznie)//dla wielu skoków na wielu skoczniach
         {
             Skok[][] wyniki;
+            
             wyniki = new Skok [skocznie.Length][];
+
             for (int i = 0; i < wyniki.Length; i++)
             {
                 wyniki[i] = new Skok[zawodnicy.Length];
@@ -65,14 +86,55 @@ namespace wat
                     Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
                     Console.ReadKey();
                 }
-                //wyświtl wyniki dla jednej skoczni tutej
-                //może osobne rankingi dal całego turnieju?
-
+                if (i < skocznie.Length - 1)
+                Program.DisplayWyniki(wyniki[i]);
+                for (int j = 0; j < klasyfikacja.Length; j++)
+                {
+                    for (int k = 0; k < Program.Wyniki1.Length; k++)
+                    {
+                        if (klasyfikacja[j].zawodnik == Program.Wyniki1[k].skoczek)
+                        {
+                            klasyfikacja[j].punkty+=punktacja[k];
+                            klasyfikacja[j].zmiana = punktacja[k];
+                        }
+                    }
+                }
+                klasyfikacja=klasyfikacja.OrderByDescending(Ranking => Ranking.punkty).ToArray();
+                DisplayRanking();
             }
             return wyniki;
         }
+        public string Naglowek = "Poz Imię               Pkt  Zmiana";
+        public string LiniaRanking(int pozycja,string name,int punkty,int change)
+        {
+            string poz;
+            string imie=name;
+            string pkt=punkty.ToString();
+            string zmiana=change.ToString();
+            if (pozycja.ToString().Length == 2)
+                poz = pozycja.ToString();
+            else
+                poz = " " + pozycja.ToString();
 
+            for (int i = 0; i < 18 - name.Length; i++)
+                imie += " ";
+            for (int i = 0; i < 4 - pkt.Length; i++)
+                pkt = " " + pkt;
+            for (int i = 0; i < 3 - zmiana.Length; i++)
+                zmiana = " " + zmiana;
 
+            return " "+poz+" "+imie+" "+pkt+" +"+zmiana;
+        }
+        public void DisplayRanking()
+        {
+            Console.WriteLine(Naglowek);
+            for(int i=0;i<klasyfikacja.Length;i++)
+            {
+                Console.WriteLine(LiniaRanking(i+1,klasyfikacja[i].zawodnik.name,klasyfikacja[i].punkty, klasyfikacja[i].zmiana));
+            }
+            Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
+            Console.ReadKey(true);
+        }
 
 
     }

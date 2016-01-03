@@ -8,8 +8,8 @@ namespace wat
         static bool Done = false;
         static Skoczek[] zawodnicy;
         static Turniej Zawody;
-        static Skok[] Wyniki1;
-        static Skok[][] Wyniki2;
+        public static Skok[] Wyniki1;
+        public static Skok[][] Wyniki2;
         static Skocznia[] skocznie;
         public static void Main(string[] args)
         {
@@ -27,7 +27,7 @@ namespace wat
         static void Menu()
         {
            
-            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.6! Zaprogramowane przez Qbek Studios");
+            Console.WriteLine("Witaj w symulatorze skoków narciarskich 2016 v0.3.9! Zaprogramowane przez Qbek Studios");
             Console.WriteLine("Wciśnij klawisz w ( ) aby wybrać.");
             Console.WriteLine("(1) Wykonaj pojedyńczy skok");
             Console.WriteLine("(2) Rozegraj konkurs na pojedyńczej skoczni");
@@ -67,10 +67,9 @@ namespace wat
                     {
                         Wyniki2[i] = new Skok[zawodnicy.Length];
                     }
-
-                    
                     Zawody = new Turniej(zawodnicy);
                     Wyniki2 = Zawody.Rozegraj(skocznie);
+                    
                     DisplayWyniki(Wyniki2);
                     break;
                 case '4':
@@ -80,10 +79,14 @@ namespace wat
                     CfgSkocznie();
                     break;
                 case '6':
-                    if (Wyniki1 != null)
-                        DisplayWyniki(Wyniki1);
-                    else if (Wyniki2 != null)
+                    if (Wyniki2 != null)
+                    {
+                        Zawody.DisplayRanking();
                         DisplayWyniki(Wyniki2);
+                    }
+                    else if (Wyniki1 != null)
+                        DisplayWyniki(Wyniki1);
+
                     break;
                 case '7':
                     if (zawodnicy != null)
@@ -341,7 +344,7 @@ namespace wat
             {
                 Console.WriteLine(Linia(i+1, Wyniki1[i].numer, Wyniki1[i].skoczek.name, Wyniki1[i].Wynik(), Wyniki1[i].odleglosc, Wyniki1[i].noty));
             }
-            Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do menu.");
+            Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować.");
             Console.ReadKey();
         }
         public static void DisplayWyniki(Skok[][] wyniki)//na wielu skoczniach
