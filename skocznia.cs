@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 namespace wat
 {
-	//buduje skocznie oraz odpowiada za zjazd skoczka po niej
-	public class Skocznia
+    //buduje skocznie oraz odpowiada za zjazd skoczka po niej
+    public class Skocznia
 	{
-		public int speed = 400;
+		
 		public int rozmiar;
 		Random ran = new Random();
 		public Skocznia(int roz)
@@ -18,6 +14,7 @@ namespace wat
 		}
 		public void buduj(){//buduje skocznię
 			string spacje = "";
+            Console.Clear();
             for (int i = 1; i <= rozmiar; i++)//nabieg
             {
                 Console.Write(spacje);
@@ -74,6 +71,7 @@ namespace wat
         }
         public Skok zjazd( Skoczek skoczek,int kolej)
         {//wykonuje zjazd gdzie spadek podczas lotu występuje co kat kroków
+            int speed = 400;
             int skill = skoczek.skill;
         	int x = 0;//poczatkowa pozycja (0,0)
             int y = 0;
@@ -87,6 +85,7 @@ namespace wat
             int odleglosc=0;
             if (silawyb == 2 && kat == 2)
                 silawyb = 3;
+            Console.Write("Skok zawodnika {0}",skoczek.name);
             while (x < rozmiar)
                 {//zjazd
                     Thread.Sleep(speed);
@@ -127,7 +126,7 @@ namespace wat
                         {
                         
                         zyje = false;
-                        kat = 2;
+                        kat = 3;
                         silawyb = 2;
                         }
                     }
@@ -240,7 +239,7 @@ namespace wat
                 	noty[i]=nota;
                 }
                 double metry=odleglosc*5+(double)ran.Next(0,10)/2;
-                zwrot=new Skok(skoczek,kolej,metry,rozmiar,noty);
+                zwrot=new Skok(skoczek,kolej,metry,rozmiar,noty,silawyb,kat);
                 return zwrot;
             }//zamyka zjazd
         }

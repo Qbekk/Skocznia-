@@ -47,9 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Turniej.cs" />
     <Compile Include="skok.cs" />
     <Compile Include="Skoczek.cs" />
-    <Compile Include="stare.cs" />
     <Compile Include="skocznia.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

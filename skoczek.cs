@@ -5,6 +5,7 @@ using System.Text;
 
 namespace wat
 {
+    //przechowuje dane skoczka
     public class Skoczek
     {
         public int skill;
