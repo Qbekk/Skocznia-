@@ -70,7 +70,7 @@ namespace wat
                     Zawody = new Turniej(zawodnicy);
                     Wyniki2 = Zawody.Rozegraj(skocznie);
                     
-                    DisplayWyniki(Wyniki2);
+                    //DisplayWyniki(Wyniki2);
                     break;
                 case '4':
                     CfgZawodnicy();

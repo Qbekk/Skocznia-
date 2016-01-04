@@ -86,7 +86,7 @@ namespace wat
                     Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
                     Console.ReadKey();
                 }
-                if (i < skocznie.Length - 1)
+                //if (i < skocznie.Length - 1)
                 Program.DisplayWyniki(wyniki[i]);
                 for (int j = 0; j < klasyfikacja.Length; j++)
                 {
