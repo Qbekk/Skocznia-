@@ -44,7 +44,7 @@ namespace wat
             Console.WriteLine("(9) Wykonaj testowy skok o losowych parametrach na losowej skoczni");
             Console.WriteLine("\n\n(0) Wyjdź");
             ConsoleKeyInfo wybor = Console.ReadKey(true);
-
+            Console.Clear();
             switch (wybor.KeyChar)
             {
                 case '1':
